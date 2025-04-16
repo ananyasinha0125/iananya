@@ -1,0 +1,10 @@
+pipelines:
+  demo:
+    group: test
+    label_template: "$COUNT"
+    template: test-2
+    materials:
+      demo-repo:
+        git: https://github.com/ananyasinha0125/iananya.git
+        branch: main2
+        
