@@ -1,10 +1,29 @@
 pipelines:
   demo:
     group: test
-    label_template: "$COUNT"
+    label_template: ${COUNT}
     template: test-2
     materials:
-      demo-repo:
         git: https://github.com/ananyasinha0125/iananya.git
+        username: ananyasinha@0125
         branch: main2
-        
+        encrypted_password: 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
+    stages:
+    - deploy:
+        approval:
+          type: success
+        jobs:
+          deploy-job:
+            timeout: 0
+            tasks:
+            - exec:
+                command: -c
+                run_if: passed
+            - exec:
+                arguments:
+                - apply
+                - -f
+                - pipeline.test.yaml
+                command: kubectl
+                run_if: passed
+~                                     
