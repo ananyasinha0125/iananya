@@ -4,8 +4,10 @@ pipelines:
     label_template: ${COUNT}
     template: test-2
     materials:
-        git: git@github.com:ananyasinha0125/iananya.git
+        git: https://github.com/ananyasinha0125/iananya.git
         branch: main2
+        username: ananyasinha@0125
+        encrypted_keys: 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
     stages:
     - deploy:
         approval:
