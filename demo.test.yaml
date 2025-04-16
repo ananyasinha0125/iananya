@@ -1,6 +1,7 @@
 pipelines:
   gocd-test:
     group: test
+    template: test-2
     label_template: ${COUNT}
     materials:
       git:
