@@ -2,10 +2,10 @@ pipelines:
   gocd-test:
     group: test
     label_template: ${COUNT}
-    template: test-2
     materials:
       git:
-        url: git@github.com:ananyasinha0125/iananya.git
+        url: https://github.com/ananyasinha0125/iananya.git
         branch: main2
+
         
 
