@@ -7,6 +7,5 @@ pipelines:
       git:
         url: https://github.com/ananyasinha0125/iananya.git
         branch: main2
-        username: ananyasinha@0125
-        encrypted_password: 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
+        
 
