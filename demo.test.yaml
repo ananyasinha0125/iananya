@@ -1,27 +1,11 @@
 pipelines:
-  demo:
+  gocd-test:
     group: test
     label_template: ${COUNT}
     materials:
-        git: https://github.com/ananyasinha0125/iananya.git
-        username: ananyasinha@0125
+      git:
+        url: https://github.com/ananyasinha0125/iananya.git
         branch: main2
+        username: ananyasinha@0125
         encrypted_password: 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
-    stages:
-    - deploy:
-        approval:
-          type: success
-        jobs:
-          deploy-job:
-            timeout: 0
-            tasks:
-            - exec:
-                command: -c
-                run_if: passed
-            - exec:
-                arguments:
-                - apply
-                - -f
-                - pipeline.test.yaml
-                command: kubectl
-                run_if: passed
+
