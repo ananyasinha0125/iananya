@@ -1,11 +1,12 @@
+format_version: 1
 pipelines:
-  gocd-test:
+  testing:
     group: test
-    template: test-2
     label_template: ${COUNT}
+    template: test-2
     materials:
-      git:
-        url: https://github.com/ananyasinha0125/iananya.git
+      repo:
+        git: git@github.com:ananyasinha0125/iananya.git
         branch: main2
 
         
