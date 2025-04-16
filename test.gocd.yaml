@@ -1,21 +1,12 @@
+format_version: 1
 pipelines:
   ananya:
     group: test
     label_template: ${COUNT}
     template: test-2
     materials:
+      repo:
         git: https://github.com/ananyasinha0125/iananya.git
         branch: main2
         username: ananyasinha@0125
-        encrypted_keys: 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
-    stages:
-    - deploy:
-        approval:
-          type: success
-        jobs:
-          deploy-job:
-            timeout: 0
-            tasks:
-            - exec:
-                command: ./build.sh
-                run_if: passed                  
+        encrypted_password: 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
