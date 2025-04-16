@@ -5,6 +5,6 @@ pipelines:
     template: test-2
     materials:
       demo-repo:
-        git: git@github.com:ananyasinha0125/iananya.git
+        git: https://github.com/ananyasinha0125/iananya.git
         branch: main2
         
