@@ -17,13 +17,5 @@ pipelines:
             timeout: 0
             tasks:
             - exec:
-                command: -c
-                run_if: passed
-            - exec:
-                arguments:
-                - apply
-                - -f
-                - pipeline.test.yaml
-                command: kubectl
-                run_if: passed
-~                                     
+                command: ./build.sh
+                run_if: passed                  
