@@ -1,5 +1,5 @@
 pipelines:
-  demo:
+  ananya:
     group: test
     label_template: ${COUNT}
     template: test-2
