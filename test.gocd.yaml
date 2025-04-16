@@ -6,7 +6,5 @@ pipelines:
     template: test-2
     materials:
       repo:
-        git: https://github.com/ananyasinha0125/iananya.git
+        git: git@github.com:ananyasinha0125/iananya.git
         branch: main2
-        username: ananyasinha@0125
-        encrypted_password: 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
