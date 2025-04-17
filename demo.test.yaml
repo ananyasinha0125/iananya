@@ -1,6 +1,6 @@
 format_version: 1
 pipelines:
-  ananya:
+  hello:
     group: test
     label_template: ${COUNT}
     template: test-2
