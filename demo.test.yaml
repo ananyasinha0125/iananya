@@ -1,13 +1,23 @@
-format_version: 1
 pipelines:
-  testing:
+  devops:
     group: test
     label_template: ${COUNT}
-    template: test-2
     materials:
-      repo:
-        git: git@github.com:ananyasinha0125/iananya.git
+      git:
+        url: git@github.com:ananyasinha0125/iananya.git
         branch: main2
+    stages:
+      - build:
+          jobs:
+            build-job:
+              resources: [*]
+              rules:
+                - type: allow
+                  resource: *
+              tasks:
+                - exec:
+                    command: echo
+                    arguments: [ "Build is running" ]
 
         
 
