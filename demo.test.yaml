@@ -1,23 +1,11 @@
+format_version: 1
 pipelines:
-  devops:
+  ananya:
     group: test
     label_template: ${COUNT}
+    template: test-2
     materials:
-      git:
-        url: git@github.com:ananyasinha0125/iananya.git
+      repo:
+        git: git@github.com:ananyasinha0125/iananya.git
         branch: main2
-    stages:
-      - build:
-          jobs:
-            build-job1:
-              resources: [*]
-              rules:
-                - type: allow
-                  resource: *
-              tasks:
-                - exec:
-                    command: echo
-                    arguments: [ "Build is running" ]
-
-        
 
