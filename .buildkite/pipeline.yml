@@ -1,7 +1,0 @@
-steps:
-  - label: "test"
-    command:
-      - "chmod +x ./build.sh"
-      - "./build.sh"           
-    agents:
-      queue: "default"
