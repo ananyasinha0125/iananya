@@ -13,7 +13,7 @@ pipelines:
     stages:
       - name: deploy
         jobs:
-          - name: deploy
+          deploy:
             timeout: 0
             environment_variables:
               VpcId: "vpc-0123456789abcdef0"
