@@ -30,6 +30,11 @@ pipelines:
               KeyName: "asg-nginx"
             tasks:
               - exec:
+                  command: ls
+                  arguments:
+                    - -R
+                    - .
+              - exec:
                   command: bash
                   arguments:
                     - ecs-gocd/scripts/deploy.sh
