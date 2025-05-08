@@ -1,11 +1,11 @@
 format_version: 10
 pipelines:
   ecs-deployment:
-    group: ecs-group
+    group: test
     materials:
       git:
         url: git@github.com:ananyasinha0125/iananya.git
-        branch: main
+        branch: master
         destination: ecs-gocd
     stages:
       - name: deploy
