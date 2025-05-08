@@ -38,8 +38,8 @@ pipelines:
                   command: chmod
                   arguments:
                     - +x
-                    - ./scripts/deploy.sh
+                    - ./ecs-gocd/ecs-gocd/scripts/deploy.sh
               - exec:
                   command: bash
                   arguments:
-                    - ./scripts/deploy.sh
+                    - ./ecs-gocd/ecs-gocd/scripts/deploy.sh
