@@ -2,7 +2,7 @@
 set -e
 
 STACK_NAME="ecs-test-stack"
-TEMPLATE_FILE="deploy/ecs-test-stack.yaml"
+TEMPLATE_FILE="./ecs-gocd/ecs-gocd/deploy/ecs-test-stack.yaml"
 REGION="us-east-1"
 
 # Parameter values (hardcoded or passed as env vars)
