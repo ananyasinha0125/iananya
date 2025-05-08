@@ -35,6 +35,11 @@ pipelines:
                     - -R
                     - .
               - exec:
+                  command: chmod
+                  arguments:
+                    - +x
+                    - ecs-gocd/scripts/deploy.sh
+              - exec:
                   command: bash
                   arguments:
-                    - ecs-gocd/scripts/deploy.sh
+                    - ./ecs-gocd/scripts/deploy.sh
