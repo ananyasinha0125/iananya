@@ -32,4 +32,4 @@ pipelines:
               - exec:
                   command: bash
                   arguments:
-                    - scripts/deploy.sh
+                    - ecs-gocd/scripts/deploy.sh
