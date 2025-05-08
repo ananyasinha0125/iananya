@@ -4,7 +4,8 @@ pipelines:
     group: test
     label_template: "${COUNT}"
     materials:
-      git:
+      repo:
+        type: git
         url: git@github.com:ananyasinha0125/iananya.git
         branch: master
         destination: ecs-gocd
