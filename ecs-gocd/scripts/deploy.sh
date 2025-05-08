@@ -7,6 +7,7 @@ echo "AWS Region: $AWS_DEFAULT_REGION"
 STACK_NAME="ecs-test-stack"
 TEMPLATE_FILE="./ecs-gocd/ecs-gocd/deploy/ecs-test-stack.yaml"
 REGION="us-east-1"
+PARAMETERS_FILE="./ecs-gocd/ecs-gocd/deploy/ecs-parameters.json"
 
 # Parameter values (hardcoded or passed as env vars)
 PARAMS="ParameterKey=VpcId,ParameterValue=${VpcId} \
@@ -28,7 +29,7 @@ aws cloudformation deploy \
   --stack-name "$STACK_NAME" \
   --template-file "$TEMPLATE_FILE" \
   --capabilities CAPABILITY_NAMED_IAM \
-  --parameter-overrides $PARAMS \
+  --parameter-overrides file://"$PARAMETERS_FILE" \
   --region "$REGION"
 
 echo "Deployment successfull!! :)"
