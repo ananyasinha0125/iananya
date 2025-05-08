@@ -1,0 +1,15 @@
+[
+  { "ParameterKey": "VpcId",            "ParameterValue": "vpc-03cce254fb8aef269" },
+  { "ParameterKey": "PublicSubnetIds",  "ParameterValue": "subnet-091b0fcf3d64e94de,subnet-0fc28c4895e252398" },
+  { "ParameterKey": "PrivateSubnetIds", "ParameterValue": "subnet-0c237d92e3e0d6f52,subnet-0880ba00b01582a9e" },
+  { "ParameterKey": "ClusterName",      "ParameterValue": "test-cluster-ecs" },
+  { "ParameterKey": "ContainerImage",   "ParameterValue": "711387112611.dkr.ecr.us-east-1.amazonaws.com/nginx/app:v1" },
+  { "ParameterKey": "ContainerPort",    "ParameterValue": "80" },
+  { "ParameterKey": "InstanceType",     "ParameterValue": "t3.medium" },
+  { "ParameterKey": "AmiId",            "ParameterValue": "ami-0ec82f3a74a24002d" },
+  { "ParameterKey": "DesiredCapacity",  "ParameterValue": "2" },
+  { "ParameterKey": "MaxSize",          "ParameterValue": "3" },
+  { "ParameterKey": "MinSize",          "ParameterValue": "2" },
+  { "ParameterKey": "KeyName",          "ParameterValue": "asg-nginx" }
+]
+
