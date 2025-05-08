@@ -9,27 +9,15 @@ TEMPLATE_FILE="./ecs-gocd/ecs-gocd/deploy/ecs-test-stack.yaml"
 REGION="us-east-1"
 PARAMETERS_FILE="./ecs-gocd/ecs-gocd/deploy/ecs-parameters.json"
 
-# Parameter values (hardcoded or passed as env vars)
-PARAMS="ParameterKey=VpcId,ParameterValue=${VpcId} \
-ParameterKey=PublicSubnetIds,ParameterValue=\"${PublicSubnetIds}\" \
-ParameterKey=PrivateSubnetIds,ParameterValue=\"${PrivateSubnetIds}\" \
-ParameterKey=ClusterName,ParameterValue=${ClusterName} \
-ParameterKey=ContainerImage,ParameterValue=${ContainerImage} \
-ParameterKey=ContainerPort,ParameterValue=${ContainerPort} \
-ParameterKey=InstanceType,ParameterValue=${InstanceType} \
-ParameterKey=AmiId,ParameterValue=${AmiId} \
-ParameterKey=DesiredCapacity,ParameterValue=${DesiredCapacity} \
-ParameterKey=MaxSize,ParameterValue=${MaxSize} \
-ParameterKey=MinSize,ParameterValue=${MinSize} \
-ParameterKey=KeyName,ParameterValue=${KeyName}"
-
 echo "Creating CloudFormation Stack: $STACK_NAME"
+
+PARAMS=$(jq -r '.[] | "ParameterKey=\(.ParameterKey),ParameterValue=\(.ParameterValue)"' "$PARAMETERS_FILE" | tr '\n' ' ')
 
 aws cloudformation deploy \
   --stack-name "$STACK_NAME" \
   --template-file "$TEMPLATE_FILE" \
   --capabilities CAPABILITY_NAMED_IAM \
-  --parameter-overrides file://"$PARAMETERS_FILE" \
+  --parameter-overrides $PARAMS \
   --region "$REGION"
 
 echo "Deployment successfull!! :)"
