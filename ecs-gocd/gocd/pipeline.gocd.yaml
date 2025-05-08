@@ -11,7 +11,7 @@ pipelines:
         branch: master
         destination: ecs-gocd
     stages:
-      - name: deploy
+     deploy-ecs:
         jobs:
           deploy:
             timeout: 0
