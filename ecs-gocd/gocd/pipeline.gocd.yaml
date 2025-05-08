@@ -28,6 +28,9 @@ pipelines:
               MaxSize: "3"
               MinSize: "2"
               KeyName: "asg-nginx"
+              AWS_ACCESS_KEY_ID: "AKIA2LIPZ4SRUZ37KWOJ"
+              AWS_SECRET_ACCESS_KEY: "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"
+              AWS_DEFAULT_REGION: "us-east-1" 
             tasks:
               - exec:
                   command: ls
