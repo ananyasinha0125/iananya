@@ -1,5 +1,8 @@
 #!/bin/bash
 set -e
+echo "AWS Access Key ID: $AWS_ACCESS_KEY_ID"
+echo "AWS Secret Access Key: $AWS_SECRET_ACCESS_KEY"
+echo "AWS Region: $AWS_DEFAULT_REGION"
 
 STACK_NAME="ecs-test-stack"
 TEMPLATE_FILE="./ecs-gocd/ecs-gocd/deploy/ecs-test-stack.yaml"
