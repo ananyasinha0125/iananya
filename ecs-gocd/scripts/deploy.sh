@@ -3,6 +3,8 @@ set -e
 if ! command -v jq &> /dev/null
 then
     echo "jq is not installed. Please install jq first."
+    sudo apt-get update
+    sudo apt-get install jq
     exit 1
 fi
 
