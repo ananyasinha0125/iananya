@@ -1,9 +1,5 @@
 #!/bin/bash
 set -e
-if ! command -v jq &> /dev/null; then
-  echo "Installing jq"
-  apt-get update && apt-get install -y jq
-fi
 
 echo "AWS Access Key ID: $AWS_ACCESS_KEY_ID"
 echo "AWS Secret Access Key: $AWS_SECRET_ACCESS_KEY"
