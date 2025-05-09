@@ -2,9 +2,8 @@ format_version: 10
 
 pipelines:
   ecs-demo:
-    group: test-2
+    group: ecs-test
     label_template: "${COUNT}"
-    template: test-2
     materials:
       repo:
         type: git
