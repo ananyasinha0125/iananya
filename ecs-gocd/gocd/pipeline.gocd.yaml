@@ -2,6 +2,7 @@ format_version: 10
 
 pipelines:
   ecs-demo:
+    template: ecs-test
     group: ecs-test
     label_template: "${COUNT}"
     materials:
