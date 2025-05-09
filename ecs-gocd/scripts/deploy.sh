@@ -1,11 +1,8 @@
 #!/bin/bash
 set -e
-if ! command -v jq &> /dev/null
-then
-    echo "jq is not installed. Please install jq first."
-    sudo apt-get update
-    sudo apt-get install jq
-    exit 1
+if ! command -v jq &> /dev/null; then
+  echo "Installing jq"
+  apt-get update && apt-get install -y jq
 fi
 
 echo "AWS Access Key ID: $AWS_ACCESS_KEY_ID"
