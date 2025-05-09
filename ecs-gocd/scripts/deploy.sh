@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-export AWS_PROFILE=ananya 
+export AWS_PROFILE=ecs
 
 STACK_NAME="ecs-test-stack"
 TEMPLATE_FILE="./ecs-gocd/ecs-gocd/deploy/ecs-test-stack.yaml"
