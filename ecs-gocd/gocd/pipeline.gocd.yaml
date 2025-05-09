@@ -29,4 +29,7 @@ pipelines:
               - exec:
                   command: bash
                   arguments:
-                    - ./ecs-gocd/ecs-gocd/scripts/deploy.sh
+                    - -c
+                    - |
+                      export AWS_PROFILE=ananya
+                      bash ./ecs-gocd/ecs-gocd/scripts/deploy.sh
