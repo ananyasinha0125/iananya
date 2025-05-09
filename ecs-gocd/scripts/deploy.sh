@@ -24,25 +24,20 @@ else
     exit 1
 fi
 
-# Now parse the parameters
-PARAMS=$(jq -r '.[] | "ParameterKey=\(.ParameterKey),ParameterValue=\(.ParameterValue)" ' "$PARAMETERS_FILE" | tr '\n' ' ')
+PARAMS_LIST=()
+while IFS= read -r line; do
+    PARAMS_LIST+=("$line")
+done < <(jq -r '.[] | "ParameterKey=\(.ParameterKey),ParameterValue=\(.ParameterValue)"' "$PARAMETERS_FILE")
 
-echo "=== Debug: Parsed PARAMS ==="
-echo "$PARAMS"
+echo "=== Debug: Parameter List ==="
+printf '%s\n' "${PARAMS_LIST[@]}"
 echo
 
-if [ -z "$PARAMS" ]; then
-    echo "No parameters found in $PARAMETERS_FILE."
-    exit 1
-fi
-
-# Deploy using CloudFormation
-echo "=== Debug: Deploying CloudFormation Stack ==="
-eval aws cloudformation deploy \
+aws cloudformation deploy \
   --stack-name "$STACK_NAME" \
   --template-file "$TEMPLATE_FILE" \
   --capabilities CAPABILITY_NAMED_IAM \
-  --parameter-overrides $PARAMS \
+  --parameter-overrides "${PARAMS_LIST[@]}" \
   --region "$REGION"
 
 echo "Deployment successful!! :)"
