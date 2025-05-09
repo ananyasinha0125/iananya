@@ -10,15 +10,18 @@ TEMPLATE_FILE="./ecs-gocd/ecs-gocd/deploy/ecs-test-stack.yaml"
 REGION="us-east-1"
 PARAMETERS_FILE="./ecs-gocd/ecs-gocd/deploy/ecs-parameters.json"
 
-echo "Creating CloudFormation Stack: $STACK_NAME"
+echo "CloudFormation Stack: $STACK_NAME"
 
 PARAMS=$(jq -r '.[] | "ParameterKey=\(.ParameterKey),ParameterValue=\(.ParameterValue)"' "$PARAMETERS_FILE" | tr '\n' ' ')
+
+echo "Parameters to be used: $PARAMS"
 
 if [ -z "$PARAMS" ]; then
     echo "No parameters found in $PARAMETERS_FILE."
     exit 1
 fi
 
+# Deploy CloudFormation stack
 aws cloudformation deploy \
   --stack-name "$STACK_NAME" \
   --template-file "$TEMPLATE_FILE" \
@@ -26,5 +29,4 @@ aws cloudformation deploy \
   --parameter-overrides $PARAMS \
   --region "$REGION"
 
-echo "Deployment successfull!! :)"
-
+echo "Deployment successful!! :)"
