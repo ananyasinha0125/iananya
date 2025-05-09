@@ -1,9 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "AWS Access Key ID: $AWS_ACCESS_KEY_ID"
-echo "AWS Secret Access Key: $AWS_SECRET_ACCESS_KEY"
-echo "AWS Region: $AWS_DEFAULT_REGION"
+export AWS_PROFILE=ananya 
 
 STACK_NAME="ecs-test-stack"
 TEMPLATE_FILE="./ecs-gocd/ecs-gocd/deploy/ecs-test-stack.yaml"
@@ -13,8 +11,6 @@ PARAMETERS_FILE="./ecs-gocd/ecs-gocd/deploy/ecs-parameters.json"
 echo "CloudFormation Stack: $STACK_NAME"
 
 PARAMS=$(jq -r '.[] | "ParameterKey=\(.ParameterKey),ParameterValue=\(.ParameterValue)"' "$PARAMETERS_FILE" | tr '\n' ' ')
-
-echo "Parameters to be used: $PARAMS"
 
 if [ -z "$PARAMS" ]; then
     echo "No parameters found in $PARAMETERS_FILE."
