@@ -31,5 +31,5 @@ pipelines:
                   arguments:
                     - -c
                     - |
-                      export AWS_PROFILE=ananya
+                      export AWS_PROFILE=ecs
                       bash ./ecs-gocd/ecs-gocd/scripts/deploy.sh
