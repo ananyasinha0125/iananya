@@ -1,38 +1,34 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
-export AWS_PROFILE=ecs
-
-STACK_NAME="ecs-test-stack"
-TEMPLATE_FILE="./ecs-gocd/ecs-gocd/deploy/ecs-test-stack.yaml"
+STACK_NAME="ecs-app-stack"
 REGION="us-east-1"
-PARAMETERS_FILE="./ecs-gocd/ecs-gocd/deploy/ecs-parameters.json"
+TEMPLATE_FILE="ecs-test-stack.yaml"
 
-echo "=== Debug: Working Directory ==="
-pwd
-echo
+PARAM_FILE="gocd/ecs-gocd/deploy/ecs-parameters.json"
 
-echo "=== Debug: List deploy directory ==="
-ls -l "$(dirname "$PARAMETERS_FILE")"
-echo
-
-echo "=== Debug: Contents of parameters file ==="
-if [[ -f "$PARAMETERS_FILE" ]]; then
-    cat "$PARAMETERS_FILE"
-else
-    echo "ERROR: Parameters file not found at $PARAMETERS_FILE"
-    exit 1
+# Debug: Confirm file exists
+if [[ ! -f "$PARAM_FILE" ]]; then
+  echo "ERROR: Parameter file $PARAM_FILE does not exist"
+  exit 1
 fi
 
+echo "=== Reading Parameters from $PARAM_FILE ==="
+cat "$PARAM_FILE"
+
+# Build parameter list
 PARAMS_LIST=()
 while IFS= read -r line; do
-    PARAMS_LIST+=("$line")
-done < <(jq -r '.[] | "ParameterKey=\(.ParameterKey),ParameterValue=\(.ParameterValue)"' "$PARAMETERS_FILE")
+  PARAMS_LIST+=("$line")
+done < <(jq -r '.[] | "ParameterKey=\(.ParameterKey),ParameterValue=\(.ParameterValue)"' "$PARAM_FILE")
 
-echo "=== Debug: Parameter List ==="
-printf '%s\n' "${PARAMS_LIST[@]}"
-echo
+# Debug output
+echo "=== Final Parameter List ==="
+for param in "${PARAMS_LIST[@]}"; do
+  echo "$param"
+done
 
+echo "=== Deploying CloudFormation Stack ==="
 aws cloudformation deploy \
   --stack-name "$STACK_NAME" \
   --template-file "$TEMPLATE_FILE" \
@@ -40,4 +36,4 @@ aws cloudformation deploy \
   --parameter-overrides "${PARAMS_LIST[@]}" \
   --region "$REGION"
 
-echo "Deployment successful!! :)"
+echo "Deployment complete."
