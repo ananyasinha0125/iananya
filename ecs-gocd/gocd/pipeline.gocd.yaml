@@ -11,25 +11,25 @@ pipelines:
         branch: master
         destination: ecs-gocd
     stages:
-     - deploy-ecs:
-        jobs:
-          deploy:
-            timeout: 0
-            tasks:
-              - exec:
-                  command: ls
-                  arguments:
-                    - -R
-                    - .
-              - exec:
-                  command: chmod
-                  arguments:
-                    - +x
-                    - ./ecs-gocd/ecs-gocd/scripts/deploy.sh
-              - exec:
-                  command: bash
-                  arguments:
-                    - -c
-                    - |
-                      export AWS_PROFILE=ecs
-                      bash ./ecs-gocd/ecs-gocd/scripts/deploy.sh
+      - deploy-ecs:
+          jobs:
+            deploy:
+              timeout: 0
+              tasks:
+                - exec:
+                    command: ls
+                    arguments:
+                      - -R
+                      - .
+                - exec:
+                    command: chmod
+                    arguments:
+                      - +x
+                      - ./ecs-gocd/ecs-gocd/scripts/deploy.sh
+                - exec:
+                    command: bash
+                    arguments:
+                      - -c
+                      - |
+                          export AWS_PROFILE=ecs
+                          bash ./ecs-gocd/ecs-gocd/scripts/deploy.sh
