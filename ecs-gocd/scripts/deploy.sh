@@ -23,12 +23,9 @@ else
   echo "ERROR: Parameters file not found at $PARAMETERS_FILE"
   exit 1
 fi
-echo
-
-echo "CloudFormation Stack: $STACK_NAME"
 
 # Now parse
-PARAMS=$(jq -r '.[] | "ParameterKey=\(.ParameterKey),ParameterValue=\(.ParameterValue)"' "$PARAMETERS_FILE" | tr '\n' ' ')
+PARAMS=$(jq -r '.[] | "ParameterKey=\(.ParameterKey),ParameterValue=\"\(.ParameterValue)\"" ' "$PARAMETERS_FILE" | tr '\n' ' ')
 
 echo "=== Debug: Parsed PARAMS ==="
 echo "$PARAMS"
@@ -40,7 +37,7 @@ if [ -z "$PARAMS" ]; then
 fi
 
 # Deploy
-aws cloudformation deploy \
+eval aws cloudformation deploy \
   --stack-name "$STACK_NAME" \
   --template-file "$TEMPLATE_FILE" \
   --capabilities CAPABILITY_NAMED_IAM \
