@@ -1,11 +1,11 @@
 #!/bin/bash
-set -euo pipefail
+set -x
 
 STACK_NAME="ecs-app-stack"
 REGION="us-east-1"
 TEMPLATE_FILE="ecs-test-stack.yaml"
 
-PARAM_FILE="gocd/ecs-gocd/deploy/ecs-parameters.json"
+PARAM_FILE="./ecs-gocd/deploy/ecs-parameters.json"
 
 # Debug: Confirm file exists
 if [[ ! -f "$PARAM_FILE" ]]; then
