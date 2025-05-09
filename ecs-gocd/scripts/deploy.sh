@@ -18,14 +18,14 @@ echo
 
 echo "=== Debug: Contents of parameters file ==="
 if [[ -f "$PARAMETERS_FILE" ]]; then
-  cat "$PARAMETERS_FILE"
+    cat "$PARAMETERS_FILE"
 else
-  echo "ERROR: Parameters file not found at $PARAMETERS_FILE"
-  exit 1
+    echo "ERROR: Parameters file not found at $PARAMETERS_FILE"
+    exit 1
 fi
 
-# Now parse
-PARAMS=$(jq -r '.[] | "ParameterKey=\(.ParameterKey),ParameterValue=\"\(.ParameterValue)\"" ' "$PARAMETERS_FILE" | tr '\n' ' ')
+# Now parse the parameters
+PARAMS=$(jq -r '.[] | "ParameterKey=\(.ParameterKey),ParameterValue=\(.ParameterValue)" ' "$PARAMETERS_FILE" | tr '\n' ' ')
 
 echo "=== Debug: Parsed PARAMS ==="
 echo "$PARAMS"
@@ -36,7 +36,8 @@ if [ -z "$PARAMS" ]; then
     exit 1
 fi
 
-# Deploy
+# Deploy using CloudFormation
+echo "=== Debug: Deploying CloudFormation Stack ==="
 eval aws cloudformation deploy \
   --stack-name "$STACK_NAME" \
   --template-file "$TEMPLATE_FILE" \
@@ -45,4 +46,3 @@ eval aws cloudformation deploy \
   --region "$REGION"
 
 echo "Deployment successful!! :)"
-
