@@ -14,7 +14,7 @@ echo "Creating CloudFormation Stack: $STACK_NAME"
 
 PARAMS=$(jq -r '.[] | "ParameterKey=\(.ParameterKey),ParameterValue=\(.ParameterValue)"' "$PARAMETERS_FILE" | tr '\n' ' ')
 
-f [ -z "$PARAMS" ]; then
+if [ -z "$PARAMS" ]; then
     echo "No parameters found in $PARAMETERS_FILE."
     exit 1
 fi
