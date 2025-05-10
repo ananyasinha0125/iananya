@@ -4,6 +4,7 @@ pipelines:
   ecs-demo:
     group: ecs-test            
     label_template: "${COUNT}"
+    template: ecs-test
     materials:
       repo:
         type: git
