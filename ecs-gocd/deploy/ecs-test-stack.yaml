@@ -40,17 +40,17 @@ Parameters:
 
   DesiredCapacity:
     Type: Number
-    Default: 2
+    Default: 1
     Description: Desired EC2 instances
 
   MaxSize:
     Type: Number
-    Default: 3
+    Default: 2
     Description: Max EC2 instances
 
   MinSize:
     Type: Number
-    Default: 2
+    Default: 1
     Description: Min EC2 instances
 
   KeyName:
