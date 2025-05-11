@@ -292,7 +292,7 @@ Resources:
     Properties:
       Cluster: !Ref ECSCluster
       ServiceName: !Sub "${AWS::StackName}-nginx-service"
-      DesiredCount: 2
+      DesiredCount: 1
       LaunchType: EC2
       TaskDefinition: !Ref ECSTaskDefinition
       LoadBalancers:
@@ -320,7 +320,7 @@ Resources:
     Type: AWS::ApplicationAutoScaling::ScalableTarget
     DependsOn: ECSService
     Properties:
-      MaxCapacity: 3
+      MaxCapacity: 2
       MinCapacity: 1
       ResourceId: !Sub "service/${ClusterName}/${AWS::StackName}-nginx-service"
       RoleARN: !GetAtt ServiceAutoScalingRole.Arn
