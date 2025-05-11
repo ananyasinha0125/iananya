@@ -3,7 +3,7 @@ set -x
 
 STACK_NAME="ecs-app-stack"
 REGION="us-east-1"
-TEMPLATE_FILE="ecs-test-stack.yaml"
+TEMPLATE_FILE="ecs-gocd/ecs-gocd/deploy/ecs-test-stack.yaml"
 
 PARAM_FILE="ecs-gocd/ecs-gocd/deploy/ecs-parameters.json"
 
