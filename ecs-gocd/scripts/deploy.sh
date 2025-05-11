@@ -20,7 +20,7 @@ cat "$PARAM_FILE"
 PARAMS_LIST=()
 while IFS= read -r line; do
   PARAMS_LIST+=("$line")
-done < <(jq -r '.[] | "ParameterKey=\(.ParameterKey),ParameterValue=\(.ParameterValue)"' "$PARAM_FILE")
+done < <(jq -r '.[] | "\(.ParameterKey)=\(.ParameterValue)"' "$PARAM_FILE")
 
 # Debug output
 echo "=== Final Parameter List ==="
