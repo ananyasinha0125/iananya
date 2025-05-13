@@ -2,7 +2,7 @@ format_version: 10
 
 pipelines:
   ecs-demo:
-    environment variables:
+    environment_variables:
       env: demo
     group: ecs-test            
     label_template: "${COUNT}"
