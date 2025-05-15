@@ -6,7 +6,7 @@ REGION="us-east-1"
 #Nginx
 NGINX_STACK_NAME="nginx-ecs-stack"
 NGINX_TEMPLATE_FILE="ecs-gocd/ecs-gocd/deploy/ecs-test-stack.yaml"
-NGINX_PARAM_FILE="ecs-gocd/ecs-gocd/deploy/nginx-params.json"
+NGINX_PARAM_FILE="ecs-gocd/ecs-gocd/deploy/ecs-parameters.json"
 
 if [[ ! -f "$NGINX_PARAM_FILE" ]]; then
   echo "ERROR: Parameter file $NGINX_PARAM_FILE does not exist"
