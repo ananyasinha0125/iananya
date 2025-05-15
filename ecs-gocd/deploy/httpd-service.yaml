@@ -1,0 +1,105 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: ECS HTTPD Service Stack
+
+Parameters:
+  ClusterName:
+    Type: String
+    Description: ECS Cluster Name
+
+  ContainerImage:
+    Type: String
+    Default: httpd:2.4
+    Description: HTTPD Docker Image
+
+  ContainerPort:
+    Type: Number
+    Default: 80
+    Description: Port exposed by Container
+
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Description: VPC Id
+
+  PublicSubnetIds:
+    Type: List<AWS::EC2::Subnet::Id>
+    Description: Subnets for ALB
+
+Resources:
+  HttpdLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /ecs/httpdapp
+      RetentionInDays: 7
+
+  HttpdTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      VpcId: !Ref VpcId
+      Port: !Ref ContainerPort
+      Protocol: HTTP
+      TargetType: instance
+      HealthCheckPath: /
+      HealthCheckProtocol: HTTP
+      HealthCheckIntervalSeconds: 30
+      HealthCheckTimeoutSeconds: 5    
+      HealthyThresholdCount: 3
+      UnhealthyThresholdCount: 2
+      Matcher:
+        HttpCode: 200-399
+
+  HttpdListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref HttpdTargetGroup
+      LoadBalancerArn: !ImportValue NginxALBArn
+      Port: 8080
+      Protocol: HTTP
+
+  HttpdTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: httpd-task
+      NetworkMode: bridge
+      RequiresCompatibilities:
+        - EC2
+      Cpu: "256"
+      Memory: "512"
+      ExecutionRoleArn: !ImportValue NginxTaskExecutionRoleArn
+      ContainerDefinitions:
+        - Name: httpd
+          Image: !Ref ContainerImage
+          Essential: true
+          PortMappings:
+            - ContainerPort: !Ref ContainerPort
+              HostPort: 8080
+              Protocol: tcp
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: /ecs/httpdapp
+              awslogs-region: !Ref AWS::Region
+              awslogs-stream-prefix: ecs
+
+  HttpdService:
+    Type: AWS::ECS::Service
+    DependsOn: HttpdListener
+    Properties:
+      Cluster: !Ref ClusterName
+      ServiceName: !Sub "${AWS::StackName}-httpd-service"
+      DesiredCount: 1
+      LaunchType: EC2
+      TaskDefinition: !Ref HttpdTaskDefinition
+      LoadBalancers:
+        - ContainerName: httpd
+          ContainerPort: !Ref ContainerPort
+          TargetGroupArn: !Ref HttpdTargetGroup
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 50
+
+Outputs:
+  HttpdDNS:
+    Description: ALB DNS name for HTTPD (same ALB as NGINX)
+    Value: !ImportValue NginxALBDNS
