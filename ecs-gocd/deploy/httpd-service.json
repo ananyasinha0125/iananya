@@ -1,1 +1,9 @@
+[
+  { "ParameterKey": "ClusterName", "ParameterValue": "test-cluster-ecs" },
+  { "ParameterKey": "ContainerImage", "ParameterValue": "711387112611.dkr.ecr.us-east-1.amazonaws.com/httpd/app:v1" },
+  { "ParameterKey": "ContainerPort", "ParameterValue": "8080" },
+  { "ParameterKey": "DesiredCount", "ParameterValue": "1" },
+  { "ParameterKey": "TargetGroupPort", "ParameterValue": "8080" },
+  { "ParameterKey": "ListenerPort", "ParameterValue": "8080" }
+]
 
