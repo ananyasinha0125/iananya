@@ -23,7 +23,7 @@ pipelines:
       docker_tags:
     group: ecs-test
     label_template: "${COUNT}"
-    template: ecs-httpd
+    template: ecs-test
     materials:
       repo:
         type: git
