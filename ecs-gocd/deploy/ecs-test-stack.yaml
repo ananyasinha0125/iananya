@@ -19,11 +19,6 @@ Parameters:
     Default: test-cluster-ecs
     Description: ECS Cluster Name
 
-  ContainerImage:
-    Type: String
-    Default: 711387112611.dkr.ecr.us-east-1.amazonaws.com/nginx/app:v1
-    Description: Docker Image
-
   ContainerPort:
     Type: Number
     Default: 80
