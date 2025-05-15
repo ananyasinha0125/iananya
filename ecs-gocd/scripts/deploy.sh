@@ -1,39 +1,50 @@
 #!/bin/bash
 set -x
 
-STACK_NAME="ecs-app-stack"
 REGION="us-east-1"
-TEMPLATE_FILE="ecs-gocd/ecs-gocd/deploy/ecs-test-stack.yaml"
 
-PARAM_FILE="ecs-gocd/ecs-gocd/deploy/ecs-parameters.json"
+#Nginx
+NGINX_STACK_NAME="nginx-ecs-stack"
+NGINX_TEMPLATE_FILE="ecs-gocd/ecs-gocd/deploy/ecs-test-stack.yaml"
+NGINX_PARAM_FILE="ecs-gocd/ecs-gocd/deploy/nginx-params.json"
 
-# Debug: Confirm file exists
-if [[ ! -f "$PARAM_FILE" ]]; then
-  echo "ERROR: Parameter file $PARAM_FILE does not exist"
+if [[ ! -f "$NGINX_PARAM_FILE" ]]; then
+  echo "ERROR: Parameter file $NGINX_PARAM_FILE does not exist"
   exit 1
 fi
 
-echo "=== Reading Parameters from $PARAM_FILE ==="
-cat "$PARAM_FILE"
-
-# Build parameter list
-PARAMS_LIST=()
+NGINX_PARAMS_LIST=()
 while IFS= read -r line; do
-  PARAMS_LIST+=("$line")
-done < <(jq -r '.[] | "\(.ParameterKey)=\(.ParameterValue)"' "$PARAM_FILE")
+  NGINX_PARAMS_LIST+=("$line")
+done < <(jq -r '.[] | "\(.ParameterKey)=\(.ParameterValue)"' "$NGINX_PARAM_FILE")
 
-# Debug output
-echo "=== Final Parameter List ==="
-for param in "${PARAMS_LIST[@]}"; do
-  echo "$param"
-done
-
-echo "=== Deploying CloudFormation Stack ==="
 aws cloudformation deploy \
-  --stack-name "$STACK_NAME" \
-  --template-file "$TEMPLATE_FILE" \
+  --stack-name "$NGINX_STACK_NAME" \
+  --template-file "$NGINX_TEMPLATE_FILE" \
   --capabilities CAPABILITY_NAMED_IAM \
-  --parameter-overrides "${PARAMS_LIST[@]}" \
+  --parameter-overrides "${NGINX_PARAMS_LIST[@]}" \
+  --region "$REGION"
+
+#HTTPD
+HTTPD_STACK_NAME="httpd-service-stack"
+HTTPD_TEMPLATE_FILE="ecs-gocd/ecs-gocd/deploy/httpd-service.yaml"
+HTTPD_PARAM_FILE="ecs-gocd/ecs-gocd/deploy/httpd-parameters.json"
+
+if [[ ! -f "$HTTPD_PARAM_FILE" ]]; then
+  echo "ERROR: Parameter file $HTTPD_PARAM_FILE does not exist"
+  exit 1
+fi
+
+HTTPD_PARAMS_LIST=()
+while IFS= read -r line; do
+  HTTPD_PARAMS_LIST+=("$line")
+done < <(jq -r '.[] | "\(.ParameterKey)=\(.ParameterValue)"' "$HTTPD_PARAM_FILE")
+
+aws cloudformation deploy \
+  --stack-name "$HTTPD_STACK_NAME" \
+  --template-file "$HTTPD_TEMPLATE_FILE" \
+  --capabilities CAPABILITY_NAMED_IAM \
+  --parameter-overrides "${HTTPD_PARAMS_LIST[@]}" \
   --region "$REGION"
 
 echo "Deployment complete."
