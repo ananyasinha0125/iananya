@@ -1,10 +1,12 @@
 format_version: 10
 
 pipelines:
-  ecs-demo:
+  ecs-nginx:
     environment_variables:
       env: demo
-    group: ecs-test            
+      docker_image:
+      docker_tags:
+    group: ecs-test
     label_template: "${COUNT}"
     template: ecs-test
     materials:
@@ -13,3 +15,19 @@ pipelines:
         url: git@github.com:ananyasinha0125/iananya.git
         branch: master
         destination: ecs-gocd
+
+  ecs-httpd:
+    environment_variables:
+      env: httpd
+      docker_image:
+      docker_tags:
+    group: ecs-test
+    label_template: "${COUNT}"
+    template: ecs-httpd
+    materials:
+      repo:
+        type: git
+        url: git@github.com:ananyasinha0125/iananya.git
+        branch: master
+        destination: ecs-gocd
+
