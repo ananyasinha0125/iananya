@@ -4,6 +4,7 @@ set -x
 REGION="us-east-1"
 
 #Nginx
+DOCKER_IMAGE=$1
 NGINX_STACK_NAME="nginx-ecs-stack"
 NGINX_TEMPLATE_FILE="ecs-gocd/ecs-gocd/deploy/ecs-test-stack.yaml"
 NGINX_PARAM_FILE="ecs-gocd/ecs-gocd/deploy/ecs-parameters.json"
