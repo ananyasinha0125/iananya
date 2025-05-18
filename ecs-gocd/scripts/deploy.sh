@@ -1,7 +1,7 @@
 #!/bin/bash
 set -x
 
-REGION="us-east-1"
+AWS_PROFILE="ecs-test"
 
 #Nginx
 DOCKER_IMAGE=$1
@@ -24,7 +24,7 @@ aws cloudformation deploy \
   --template-file "$NGINX_TEMPLATE_FILE" \
   --capabilities CAPABILITY_NAMED_IAM \
   --parameter-overrides "${NGINX_PARAMS_LIST[@]}" \
-  --region "$REGION"
+  --profile "$AWS_PROFILE"
 
 #HTTPD
 HTTPD_STACK_NAME="httpd-service-stack"
@@ -46,6 +46,6 @@ aws cloudformation deploy \
   --template-file "$HTTPD_TEMPLATE_FILE" \
   --capabilities CAPABILITY_NAMED_IAM \
   --parameter-overrides "${HTTPD_PARAMS_LIST[@]}" \
-  --region "$REGION"
+  --profile "$AWS_PROFILE"
 
 echo "Deployment complete."
