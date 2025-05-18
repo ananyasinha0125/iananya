@@ -7,8 +7,8 @@ export AWS_PROFILE="ecs-test"
 #Nginx
 DOCKER_IMAGE=$1
 NGINX_STACK_NAME="nginx-ecs-stack"
-NGINX_TEMPLATE_FILE="ecs-gocd/ecs-gocd/deploy/ecs-test-stack.yaml"
-NGINX_PARAM_FILE="ecs-gocd/ecs-gocd/deploy/ecs-parameters.json"
+NGINX_TEMPLATE_FILE="ecs-gocd/ecs-gocd/deploy/nginx-service.yaml"
+NGINX_PARAM_FILE="ecs-gocd/ecs-gocd/deploy/nginx-parameters.json"
 
 if [[ ! -f "$NGINX_PARAM_FILE" ]]; then
   echo "ERROR: Parameter file $NGINX_PARAM_FILE does not exist"
@@ -25,8 +25,7 @@ aws cloudformation deploy \
   --template-file "$NGINX_TEMPLATE_FILE" \
   --capabilities CAPABILITY_NAMED_IAM \
   --parameter-overrides "${NGINX_PARAMS_LIST[@]}" \
-  --region "$REGION" \
-  --profile ecs-test
+  --region "$REGION" 
 
 #HTTPD
 HTTPD_STACK_NAME="httpd-service-stack"
@@ -48,7 +47,6 @@ aws cloudformation deploy \
   --template-file "$HTTPD_TEMPLATE_FILE" \
   --capabilities CAPABILITY_NAMED_IAM \
   --parameter-overrides "${HTTPD_PARAMS_LIST[@]}" \
-  --region "$REGION" \
-  --profile ecs-test
+  --region "$REGION"
 
 echo "Deployment complete."
