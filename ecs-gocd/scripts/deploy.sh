@@ -2,7 +2,7 @@
 set -x
 
 REGION="us-east-1"
-AWS_PROFILE="ecs-test"
+export AWS_PROFILE="ecs-test"
 
 #Nginx
 DOCKER_IMAGE=$1
