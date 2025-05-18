@@ -4,8 +4,8 @@ pipelines:
   ecs-nginx:
     environment_variables:
       env: nginx
-      docker_image: "711387112611.dkr.ecr.us-east-1.amazonaws.com/nginx/app"
-      docker_tags:
+      NGINX_IMAGE: "711387112611.dkr.ecr.us-east-1.amazonaws.com/nginx/app"
+      NGINX_TAGS:
       AWS_ACCESS_KEY_ID:        
       AWS_SECRET_ACCESS_KEY:
       AWS_DEFAULT_REGION: "us-east-1"
@@ -22,8 +22,8 @@ pipelines:
   ecs-httpd:
     environment_variables:
       env: httpd
-      DOCKER_IMAGE: "711387112611.dkr.ecr.us-east-1.amazonaws.com/httpd/app"
-      DOCKER_TAGS: 
+      HTTPD_IMAGE: "711387112611.dkr.ecr.us-east-1.amazonaws.com/httpd/app"
+      HTTPD_TAGS: 
       AWS_ACCESS_KEY_ID: 
       AWS_SECRET_ACCESS_KEY: 
       AWS_DEFAULT_REGION: "us-east-1"
