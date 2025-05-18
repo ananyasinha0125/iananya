@@ -3,9 +3,12 @@ format_version: 10
 pipelines:
   ecs-nginx:
     environment_variables:
-      env: demo
-      docker_image:
+      env: nginx
+      docker_image: "711387112611.dkr.ecr.us-east-1.amazonaws.com/nginx/app"
       docker_tags:
+      AWS_ACCESS_KEY_ID:        
+      AWS_SECRET_ACCESS_KEY:
+      AWS_DEFAULT_REGION: "us-east-1"
     group: ecs-test
     label_template: "${COUNT}"
     template: ecs-test
@@ -19,8 +22,11 @@ pipelines:
   ecs-httpd:
     environment_variables:
       env: httpd
-      docker_image:
-      docker_tags:
+      DOCKER_IMAGE: "711387112611.dkr.ecr.us-east-1.amazonaws.com/httpd/app"
+      DOCKER_TAGS: 
+      AWS_ACCESS_KEY_ID: 
+      AWS_SECRET_ACCESS_KEY: 
+      AWS_DEFAULT_REGION: "us-east-1"
     group: ecs-test
     label_template: "${COUNT}"
     template: ecs-test
@@ -30,4 +36,5 @@ pipelines:
         url: git@github.com:ananyasinha0125/iananya.git
         branch: master
         destination: ecs-gocd
+
 
