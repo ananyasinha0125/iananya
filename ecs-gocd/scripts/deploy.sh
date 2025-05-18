@@ -1,6 +1,7 @@
 #!/bin/bash
 set -x
 
+REGION="us-east-1"
 AWS_PROFILE="ecs-test"
 
 #Nginx
@@ -25,6 +26,7 @@ aws cloudformation deploy \
   --capabilities CAPABILITY_NAMED_IAM \
   --parameter-overrides "${NGINX_PARAMS_LIST[@]}" \
   --profile "$AWS_PROFILE"
+  --region "$REGION"
 
 #HTTPD
 HTTPD_STACK_NAME="httpd-service-stack"
@@ -47,5 +49,6 @@ aws cloudformation deploy \
   --capabilities CAPABILITY_NAMED_IAM \
   --parameter-overrides "${HTTPD_PARAMS_LIST[@]}" \
   --profile "$AWS_PROFILE"
+  --region "$REGION"
 
 echo "Deployment complete."
