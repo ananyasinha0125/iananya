@@ -26,7 +26,7 @@ aws cloudformation deploy \
   --capabilities CAPABILITY_NAMED_IAM \
   --parameter-overrides "${NGINX_PARAMS_LIST[@]}" \
   --region "$REGION" \
-  --profile "$AWS_PROFILE"
+  --profile ecs-test
 
 #HTTPD
 HTTPD_STACK_NAME="httpd-service-stack"
@@ -49,6 +49,6 @@ aws cloudformation deploy \
   --capabilities CAPABILITY_NAMED_IAM \
   --parameter-overrides "${HTTPD_PARAMS_LIST[@]}" \
   --region "$REGION" \
-  --profile "$AWS_PROFILE"
+  --profile ecs-test
 
 echo "Deployment complete."
