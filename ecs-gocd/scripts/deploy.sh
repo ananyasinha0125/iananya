@@ -2,10 +2,10 @@
 set -x
 
 REGION="us-east-1"
-export AWS_PROFILE="ecs-test"
 
 #Nginx
-DOCKER_IMAGE=$1
+NGINX_IMAGE=$1
+NGINX_TAG=$2
 NGINX_STACK_NAME="nginx-ecs-stack"
 NGINX_TEMPLATE_FILE="ecs-gocd/ecs-gocd/deploy/nginx-service.yaml"
 NGINX_PARAM_FILE="ecs-gocd/ecs-gocd/deploy/nginx-parameters.json"
@@ -25,9 +25,12 @@ aws cloudformation deploy \
   --template-file "$NGINX_TEMPLATE_FILE" \
   --capabilities CAPABILITY_NAMED_IAM \
   --parameter-overrides "${NGINX_PARAMS_LIST[@]}" \
+    ContainerImage="${NGINX_IMAGE}:${NGINX_TAG}" \
   --region "$REGION" 
 
 #HTTPD
+HTTPD_IMAGE=$3
+HTTPD_TAG=$4
 HTTPD_STACK_NAME="httpd-service-stack"
 HTTPD_TEMPLATE_FILE="ecs-gocd/ecs-gocd/deploy/httpd-service.yaml"
 HTTPD_PARAM_FILE="ecs-gocd/ecs-gocd/deploy/httpd-parameters.json"
@@ -46,7 +49,8 @@ aws cloudformation deploy \
   --stack-name "$HTTPD_STACK_NAME" \
   --template-file "$HTTPD_TEMPLATE_FILE" \
   --capabilities CAPABILITY_NAMED_IAM \
-  --parameter-overrides "${HTTPD_PARAMS_LIST[@]}" \
+  --parameter-overrides "${HTTPD_PARAMS_LIST[@]}" \ 
+    ContainerImage="${HTTPD_IMAGE}:${HTTPD_TAG}" \
   --region "$REGION"
 
 echo "Deployment complete."
