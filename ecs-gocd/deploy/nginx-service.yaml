@@ -222,7 +222,7 @@ Resources:
     Type: AWS::Route53::RecordSet
     Properties:
       HostedZoneName: nginx.ecs.com.
-      Name: !Sub "app.${AppName}.ecs.com."
+      Name: !Sub "app.nginx.ecs.com."
       Type: CNAME
       TTL: 60
       ResourceRecords:
