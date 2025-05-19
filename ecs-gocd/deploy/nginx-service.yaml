@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: End-to-End ECS Deployment
+Description: ECS NGINX Service Stack
 
 Parameters:
   VpcId:
