@@ -26,7 +26,7 @@ aws cloudformation deploy \
   --capabilities CAPABILITY_NAMED_IAM \
   --parameter-overrides "${NGINX_PARAMS_LIST[@]}" \
     ContainerImage="${NGINX_IMAGE}:${NGINX_TAG}" \
-  --region "$REGION" 
+  --region "$REGION"
 
 #HTTPD
 HTTPD_IMAGE=$3
@@ -49,7 +49,7 @@ aws cloudformation deploy \
   --stack-name "$HTTPD_STACK_NAME" \
   --template-file "$HTTPD_TEMPLATE_FILE" \
   --capabilities CAPABILITY_NAMED_IAM \
-  --parameter-overrides "${HTTPD_PARAMS_LIST[@]}" \ 
+  --parameter-overrides "${HTTPD_PARAMS_LIST[@]}" \
     ContainerImage="${HTTPD_IMAGE}:${HTTPD_TAG}" \
   --region "$REGION"
 
