@@ -6,6 +6,10 @@ Parameters:
     Type: String
     Description: ECS Cluster Name
 
+  AppName:
+    Type: String
+    Description: Name of the application 
+
   ContainerImage:
     Type: String
     Default: httpd:2.4
@@ -28,7 +32,7 @@ Resources:
   HttpdLogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: /ecs/httpdapp
+      LogGroupName: !Sub "/ecs/${AppName}app"
       RetentionInDays: 7
 
   HttpdTargetGroup:
@@ -60,7 +64,7 @@ Resources:
   HttpdTaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      Family: httpd-task
+      Family: !Sub "${AppName}-task"
       NetworkMode: bridge
       RequiresCompatibilities:
         - EC2
@@ -68,7 +72,7 @@ Resources:
       Memory: "512"
       ExecutionRoleArn: !ImportValue NginxTaskExecutionRoleArn
       ContainerDefinitions:
-        - Name: httpd
+        - Name: !Ref AppName
           Image: !Ref ContainerImage
           Essential: true
           PortMappings:
@@ -78,7 +82,7 @@ Resources:
           LogConfiguration:
             LogDriver: awslogs
             Options:
-              awslogs-group: /ecs/httpdapp
+              awslogs-group: !Sub "/ecs/${AppName}app"
               awslogs-region: !Ref AWS::Region
               awslogs-stream-prefix: ecs
 
@@ -87,12 +91,12 @@ Resources:
     DependsOn: HttpdListener
     Properties:
       Cluster: !Ref ClusterName
-      ServiceName: !Sub "${AWS::StackName}-httpd-service"
+      ServiceName: !Sub "${AWS::StackName}-${AppName}-service"
       DesiredCount: 1
       LaunchType: EC2
       TaskDefinition: !Ref HttpdTaskDefinition
       LoadBalancers:
-        - ContainerName: httpd
+        - ContainerName: !Ref AppName
           ContainerPort: !Ref ContainerPort
           TargetGroupArn: !Ref HttpdTargetGroup
       DeploymentConfiguration:
