@@ -1,7 +1,8 @@
 #!/bin/bash
 set -x
 
-REGION=us-east-1
+export AWS_PROFILE=ecs-test
+export AWS_DEFAULT_REGION=us-east-1
 
 #Nginx
 NGINX_IMAGE=$1
@@ -26,7 +27,7 @@ aws cloudformation deploy \
   --capabilities CAPABILITY_NAMED_IAM \
   --parameter-overrides "${NGINX_PARAMS_LIST[@]}" \
     ContainerImage="${NGINX_IMAGE}:${NGINX_TAG}" \
-  --region "$REGION"
+  --region "$AWS_DEFAULT_REGION"
 
 #HTTPD
 HTTPD_IMAGE=$3
@@ -51,6 +52,6 @@ aws cloudformation deploy \
   --capabilities CAPABILITY_NAMED_IAM \
   --parameter-overrides "${HTTPD_PARAMS_LIST[@]}" \
     ContainerImage="${HTTPD_IMAGE}:${HTTPD_TAG}" \
-  --region "$REGION"
+  --region "$AWS_DEFAULT_REGION"
 
 echo "Deployment complete."
