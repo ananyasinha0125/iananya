@@ -4,8 +4,7 @@ pipelines:
   ecs-nginx:
     environment_variables:
       env: nginx
-      NGINX_IMAGE: "711387112611.dkr.ecr.us-east-1.amazonaws.com/nginx/app"
-      NGINX_TAGS:
+      NGINX_IMAGE: "711387112611.dkr.ecr.us-east-1.amazonaws.com/nginx/app:v1"
       AWS_ACCESS_KEY_ID:        
       AWS_SECRET_ACCESS_KEY:
       AWS_DEFAULT_REGION: "us-east-1"
@@ -22,8 +21,7 @@ pipelines:
   ecs-httpd:
     environment_variables:
       env: httpd
-      HTTPD_IMAGE: "711387112611.dkr.ecr.us-east-1.amazonaws.com/httpd/app"
-      HTTPD_TAGS: 
+      HTTPD_IMAGE: "711387112611.dkr.ecr.us-east-1.amazonaws.com/httpd/app:v1"
       AWS_ACCESS_KEY_ID: 
       AWS_SECRET_ACCESS_KEY: 
       AWS_DEFAULT_REGION: "us-east-1"
