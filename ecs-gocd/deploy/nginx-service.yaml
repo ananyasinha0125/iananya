@@ -352,3 +352,7 @@ Outputs:
     Description: "ECS Cluster Name"
     Value: !Ref ECSCluster
 
+  NginxTaskExecutionRoleArn:
+    Value: !GetAtt ECSTaskExecutionRole.Arn
+    Export:
+      Name: NginxTaskExecutionRoleArn
