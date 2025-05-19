@@ -24,6 +24,14 @@ Parameters:
     Default: 80
     Description: Port exposed by Container
 
+  ContainerImage:
+    Type: String
+    Description: Container image URI for ECS task
+
+  AppName:
+    Type: String
+    Description: Application name to use for ECS service, task, and logs
+
   InstanceType:
     Type: String
     Default: t3.medium
@@ -214,7 +222,7 @@ Resources:
     Type: AWS::Route53::RecordSet
     Properties:
       HostedZoneName: nginx.ecs.com.
-      Name: app.nginx.ecs.com.
+      Name: !Sub "app.${AppName}.ecs.com."
       Type: CNAME
       TTL: 60
       ResourceRecords:
@@ -223,13 +231,13 @@ Resources:
   LogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: /ecs/nginxapp
+      LogGroupName: !Sub "/ecs/${AppName}"
       RetentionInDays: 7
 
   ECSTaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      Family: "ecs-task"
+      Family: !Sub "${AppName}-task"
       NetworkMode: bridge
       RequiresCompatibilities:
         - EC2
@@ -237,7 +245,7 @@ Resources:
       Memory: "512"
       ExecutionRoleArn: !GetAtt ECSTaskExecutionRole.Arn
       ContainerDefinitions:
-        - Name: app
+        - Name: !Ref AppName 
           Image: !Ref ContainerImage
           Essential: true
           PortMappings:
@@ -247,7 +255,7 @@ Resources:
           LogConfiguration:
             LogDriver: awslogs
             Options:
-              awslogs-group: /ecs/nginxapp
+              awslogs-group: !Sub "/ecs/${AppName}"
               awslogs-region: !Ref AWS::Region
               awslogs-stream-prefix: ecs
 
@@ -286,7 +294,7 @@ Resources:
       - ALBListener 
     Properties:
       Cluster: !Ref ECSCluster
-      ServiceName: !Sub "${AWS::StackName}-nginx-service"
+      ServiceName: !Sub "${AWS::StackName}-${AppName}-service"
       DesiredCount: 1
       LaunchType: EC2
       TaskDefinition: !Ref ECSTaskDefinition
