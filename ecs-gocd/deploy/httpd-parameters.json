@@ -10,5 +10,5 @@
   { "ParameterKey": "MaxSize", "ParameterValue": "2" },
   { "ParameterKey": "MinSize", "ParameterValue": "1" },
   { "ParameterKey": "KeyName", "ParameterValue": "asg-nginx" },
-  { "ParameterKey": "AppName", "ParameterValue": "nginxapp" }
+  { "ParameterKey": "AppName", "ParameterValue": "httpdapp" }
 ]
