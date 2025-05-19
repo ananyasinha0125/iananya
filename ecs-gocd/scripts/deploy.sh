@@ -1,12 +1,6 @@
 #!/bin/bash
 set -x
 
-: "${AWS_ACCESS_KEY_ID:?}"
-: "${AWS_SECRET_ACCESS_KEY:?}"
-: "${AWS_DEFAULT_REGION:=us-east-1}"
-
-export AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_DEFAULT_REGION
-
 #Nginx
 NGINX_IMAGE=$1
 NGINX_TAG=$2
@@ -31,6 +25,7 @@ aws cloudformation deploy \
   --parameter-overrides "${NGINX_PARAMS_LIST[@]}" \
     ContainerImage="${NGINX_IMAGE}:${NGINX_TAG}" \
   --region "$AWS_DEFAULT_REGION"
+  --profile ecs-test
 
 #HTTPD
 HTTPD_IMAGE=$3
@@ -56,5 +51,6 @@ aws cloudformation deploy \
   --parameter-overrides "${HTTPD_PARAMS_LIST[@]}" \
     ContainerImage="${HTTPD_IMAGE}:${HTTPD_TAG}" \
   --region "$AWS_DEFAULT_REGION"
+  --profile ecs-test
 
 echo "Deployment complete."
