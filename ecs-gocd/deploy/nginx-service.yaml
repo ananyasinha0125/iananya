@@ -209,6 +209,36 @@ Resources:
       Port: 80
       Protocol: HTTP
 
+  PrivateHostedZone:
+    Type: AWS::Route53::HostedZone
+    Properties:
+      Name: demo.ecs.com
+      VPCs:
+        - VPCId: !Ref VpcId
+          VPCRegion: !Ref AWS::Region
+      HostedZoneConfig:
+        Comment: "Private hosted zone for ECS"
+
+    PrivateRecordSetNginx:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        HostedZoneName: nginx.ecs.com.
+        Name: app.nginx.ecs.com.
+        Type: CNAME
+        TTL: 60
+        ResourceRecords:
+          - !GetAtt NginxALB.DNSName
+  
+    PrivateRecordSetHttpd:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        HostedZoneName: nginx.ecs.com.
+        Name: app.httpd.nginx.ecs.com.
+        Type: CNAME
+        TTL: 60
+        ResourceRecords:
+          - !GetAtt HttpdALB.DNSName
+
   LogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
