@@ -111,9 +111,10 @@ Resources:
           Name: !Ref EC2InstanceProfile
         SecurityGroupIds:           
           - !Ref ECSAutoScalingSecurityGroup
-        UserData: !Base64 |
+        UserData: !Base64 
+          Fn::Sub: |
           #!/bin/bash
-          echo "ECS_CLUSTER= test-cluster-ecs" >> /etc/ecs/ecs.config
+          echo "ECS_CLUSTER=${ClusterName}" > /etc/ecs/ecs.config
 
   ECSAutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
@@ -220,8 +221,9 @@ Resources:
 
   PrivateRecordSet:
     Type: AWS::Route53::RecordSet
+    DependsOn: ALB
     Properties:
-      HostedZoneName: nginx.ecs.com.
+      HostedZoneId: !Ref PrivateHostedZone
       Name: !Sub "app.nginx.ecs.com."
       Type: CNAME
       TTL: 60
