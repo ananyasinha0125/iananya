@@ -4,7 +4,7 @@
   { "ParameterKey": "PrivateSubnetIds", "ParameterValue": "subnet-0c237d92e3e0d6f52,subnet-0880ba00b01582a9e" },
   { "ParameterKey": "ClusterName", "ParameterValue": "test-cluster-ecs" },
   { "ParameterKey": "ContainerPort", "ParameterValue": "8080" },
-  { "ParameterKey": "InstanceType", "ParameterValue": "t3.medium" },
+  { "ParameterKey": "InstanceType", "ParameterValue": "t3.micro" },
   { "ParameterKey": "AmiId", "ParameterValue": "ami-0ec82f3a74a24002d" },
   { "ParameterKey": "DesiredCapacity", "ParameterValue": "1" },
   { "ParameterKey": "MaxSize", "ParameterValue": "2" },
