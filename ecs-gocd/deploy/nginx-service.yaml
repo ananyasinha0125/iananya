@@ -209,27 +209,6 @@ Resources:
       Port: 80
       Protocol: HTTP
 
-  PrivateHostedZone:
-    Type: AWS::Route53::HostedZone
-    Properties:
-      Name: nginx.ecs.com
-      VPCs:
-        - VPCId: !Ref VpcId
-          VPCRegion: !Ref AWS::Region
-      HostedZoneConfig:
-        Comment: "Private hosted zone for ECS app"
-
-  PrivateRecordSet:
-    Type: AWS::Route53::RecordSet
-    DependsOn: ALB
-    Properties:
-      HostedZoneId: !Ref PrivateHostedZone
-      Name: !Sub "app.nginx.ecs.com."
-      Type: CNAME
-      TTL: 60
-      ResourceRecords:
-        - !GetAtt ALB.DNSName
-
   LogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
