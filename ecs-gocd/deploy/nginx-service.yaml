@@ -299,7 +299,7 @@ Resources:
       LaunchType: EC2
       TaskDefinition: !Ref ECSTaskDefinition
       LoadBalancers:
-        - ContainerName: app
+        - ContainerName: !Ref AppName
           ContainerPort: !Ref ContainerPort
           TargetGroupArn: !Ref ALBTargetGroup
       DeploymentConfiguration:
