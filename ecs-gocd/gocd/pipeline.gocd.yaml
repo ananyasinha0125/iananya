@@ -34,5 +34,6 @@ pipelines:
         url: git@github.com:ananyasinha0125/iananya.git
         branch: master
         destination: ecs-gocd
+        auto_update: false
 
 
