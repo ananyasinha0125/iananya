@@ -34,7 +34,7 @@ Parameters:
 
   InstanceType:
     Type: String
-    Default: t3.medium
+    Default: t3.micro
     Description: EC2 Instance Type
 
   AmiId:
